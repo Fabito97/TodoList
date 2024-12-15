@@ -64,7 +64,7 @@ const ToDoItem = ({ item, id, onDelete, onChecked, isChecked, priority, handleEd
     <li onClick={() => onChecked(id)} className="">
       <div 
         style={{
-          width:'80%'
+          maxWidth:'80%'
         }}
       >
 
@@ -91,7 +91,7 @@ const ToDoItem = ({ item, id, onDelete, onChecked, isChecked, priority, handleEd
           onClick={(e) => handleEdit(e, id)}
           >Edit</button>
 
-        <button className='btn-link remove-item'
+        <button className='btn-delete remove-item'
           onClick={() => onDelete(id)}
           >
           &times;
