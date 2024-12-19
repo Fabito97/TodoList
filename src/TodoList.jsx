@@ -22,8 +22,11 @@ const TodoList = ({setToDoItems, toDoItems, setItem, setPriority, setTaskId, set
   const handleDelete = (id) => {
     const item = toDoItems.find((item) => item.id === id )
     
-    setToDoItems((prevItems) => prevItems.filter((item) => item.id !== id));
-    setDeletedItems((prevItems) => [...prevItems, item]);
+   setToDoItems((prevItems) => prevItems.filter((item) => item.id !== id));
+
+     const deletedTasks =  [...(JSON.parse(localStorage.getItem('deletedItems')) || []), item];
+     console.log(deletedTasks);
+     localStorage.setItem('deletedItems', JSON.stringify(deletedTasks));
   };
 
 

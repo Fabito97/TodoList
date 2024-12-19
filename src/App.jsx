@@ -66,6 +66,7 @@ function App() {
   return (
     <div className="container">
       <div>
+        <DeletedItemLIst toDoItem={toDoItems}/>
         <ToDoItems toDoItems={toDoItems} onClear={handleClear}>
           <Form 
             onSubmit={handleSubmit} 
@@ -88,7 +89,6 @@ function App() {
             />
         </ToDoItems>
         <DoneList toDoItems={toDoItems} />
-        <DeletedItemLIst />
       </div>
     </div>
   );
