@@ -1,29 +1,36 @@
-import { useState, useEffect } from "react";
-import Logo from "./assets/todo-logo1.png";
+import { useState, useEffect } from 'react';
+import Logo from './assets/todo-logo1.png';
 
-export const ToDoItems = ({children, toDoItems, onClear}) => {
-
+export const ToDoItems = ({ children, toDoItems, onClear }) => {
   return (
-    <div className='app-wrapper'>
+    <div className="app-wrapper">
       <div style={{}}>
-        <div className='app-title'>
-          <img src={Logo} width={100} alt="" />
-          <h2>To Do List</h2>
-        </div>  
+        <div className="title">
+          <p>Start by adding items to your todo list</p>
+        </div>
 
         {children}
 
-        <div className='footer'>
-          {toDoItems.length > 0 ?
-            <button className='btn-clear'
-            onClick={onClear}>
-              Clear
-            </button> :
-            <p>Start by adding items to your todo list</p>}
+        <div className="title">
+          <ClearButton toDoItems={toDoItems} onClear={onClear} />
         </div>
       </div>
     </div>
   );
 };
 
+const ClearButton = ({ children, toDoItems, onClear }) => {
+  return (
+    <div>
+      {toDoItems.length > 0 ? (
+        <button className="btn-clear" onClick={onClear}>
+          Clear
+        </button>
+      ) : (
+        ''
+      )}
+    </div>
+  );
+};
 
+export default ToDoItems;

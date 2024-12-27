@@ -1,16 +1,13 @@
 .deleted-items {
   position: absolute;
-  top: 0;
+  top: 60px;
   right: 0;
   background: rgba(0,0,0,0.3);
-  width: 500px;
-  height: 95vh;
-  display: flex;
+  max-width: 500px;
+  max-height: 100vh;
   padding: 1rem;
-  align-items: center;
-  justify-content: flex-end;
   z-index: 999;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-X: hidden;
   border-radius: 10px;
 }

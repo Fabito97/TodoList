@@ -1,119 +1,67 @@
 import React, { useEffect, useState } from 'react';
 import './DeletedItemList.css';
+import { toast } from 'react-toastify';
 
-const DeletedItemLIst = ({ todoItems }) => {
-  const [deletedTasks, setDeletedTasks] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const fetchDeletedItem = () => {
-    const deletedItems = localStorage.getItem('deletedItems');
-    setDeletedTasks(deletedItems ? JSON.parse(deletedItems) : []);
-    setIsOpen(true);
-  };
-
+const DeletedItemLIst = ({
+  deletedTasks,
+  todoItems,
+  setTodoItems,
+  setIsOpen,
+  handleClear,
+  children,
+}) => {
   return (
-    <div
+    <div  
       style={{
         display: 'flex',
-        width: '100%',
+        flexDirection: 'column',
         justifyContent: 'flex-end',
         margin: '1rem',
       }}
     >
       <div>
-        {!isOpen && (
+        <div className="deleted-items">
           <button
             style={{
-              padding: '10px 20px',
-              borderRadius: '10px',
-              background: '#2b0e5a',
-              color: '#fff',
+              padding: '5px',
+              position: 'absolute',
               border: 'none',
+              top: '10px',
+              left: '10px',
+              color: 'red',
+              background: 'none',
               cursor: 'pointer',
+              fontSize: '20px',
             }}
-            onClick={fetchDeletedItem}
+            onClick={() => setIsOpen(false)}
           >
-            View deleted tasks
+            &times;
           </button>
-        )}
+            <div style={{ height: '500px' }}>
+          {children}
 
-        {isOpen && (
-          <DeletedItem deletedTasks={deletedTasks} setIsOpen={setIsOpen} />
-        )}
+            </div>
+
+          {deletedTasks.length > 1 && (
+            <button
+              style={{
+                padding: '10px 20px',
+                borderRadius: '10px',
+                background: '#2b05',
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                margin: '10px 10px',
+              }}
+              onClick={handleClear}
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export default DeletedItemLIst;
-
-const DeletedItem = ({ deletedTasks, setIsOpen }) => {
-  return (
-    <div className="deleted-items">
-      <button
-        onClick={() => setIsOpen(false)}
-        style={{
-          padding: '5px',
-          position: 'absolute',
-          border: 'none',
-          top: '10px',
-          left: '10px',
-          color: 'red',
-          background: 'none',
-          cursor: 'pointer',
-        }}
-      >
-        &times;
-      </button>
-      <div className="item-container">
-        <ul className="deleted-items-list">
-          {deletedTasks?.map((item, i) => (
-            <li key={i}>
-              <div
-                style={{
-                  maxWidth: '100%',
-                  textAlign: 'left',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <div>
-                  <span className={` `}>{item.task}</span>
-                  <span className={`status `}>{item.priority}</span>
-                </div>
-                <button
-                  style={{
-                    padding: '10px 20px',
-                    borderRadius: '10px',
-                    background: '#2b05',
-                    color: '#fff',
-                    border: 'none',
-                    cursor: 'pointer',
-                    marginTop: '10px',
-                  }}
-                >
-                  Undo delete
-                </button>
-              </div>
-            </li>
-          ))}
-          <button
-            style={{
-              padding: '10px 20px',
-              borderRadius: '10px',
-              background: '#2b05',
-              color: '#fff',
-              border: 'none',
-              cursor: 'pointer',
-              margin: '10px 10px 30px',
-            }}
-            onClick={() => setIsOpen(true)}
-          >
-            Clear
-          </button>
-        </ul>
-      </div>
-    </div>
-  );
-};

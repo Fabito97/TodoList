@@ -2,7 +2,7 @@ const Form = ({ onSubmit, setItem, item, priority, setPriority, editing }) => {
   return (
     <form className="form" onSubmit={onSubmit}>
       <div>
-        <label htmlFor="" style={{ display: 'block', fontSize: '10px' }}>
+        <label htmlFor="" style={{ display: 'block', fontSize: '10px', marginBottom: '5px' }}>
           Priority
         </label>
         <select

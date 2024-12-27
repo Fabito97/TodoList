@@ -3,19 +3,21 @@ import './App.css';
 import Form from './Form';
 import { ToDoItems } from './ToDoItems';
 import TodoList from './TodoList';
-import DeletedItemLIst from './DeletedItemList';
+import Navbar from './Navbar';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [toDoItems, setToDoItems] = useState(() => {
     const savedItems = localStorage.getItem('toDoItems');
-    return savedItems ? JSON.parse(savedItems) : [];
+    const tasks = savedItems ? JSON.parse(savedItems) : [];
+
+    return tasks.sort((a, b) => a.isChecked - b.isChecked);
   });
-  
-  const [taskId, setTaskId] = useState()
-  const [priority, setPriority] = useState('low')
+
+  const [taskId, setTaskId] = useState();
+  const [priority, setPriority] = useState('low');
   const [item, setItem] = useState('');
   const [editing, setEditing] = useState(false);
-  
 
   useEffect(() => {
     localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
@@ -28,16 +30,19 @@ function App() {
       const itemExists = toDoItems.some((toDoItem) => toDoItem.item === item);
 
       if (!itemExists) {
-        if(editing) {
-          handleTaskUpdate(item, taskId, priority)
+        if (editing) {
+          handleTaskUpdate(item, taskId, priority);
         } else {
           const newItem = {
-          id: toDoItems.length + 1, 
-          task: item, 
-          isChecked: false, 
-          priority };
+            id: toDoItems.length + 1,
+            task: item,
+            isChecked: false,
+            priority,
+          };
 
-          setToDoItems((items) => [...items, newItem]);
+          setToDoItems((items) =>
+            [...items, newItem].sort((a, b) => a.isChecked - b.isChecked)
+          );
         }
       } else {
         alert(`${item} is already in your list`);
@@ -49,30 +54,32 @@ function App() {
 
   const handleTaskUpdate = (updatedTask, taskId, priority) => {
     setToDoItems((prevItems) =>
-    prevItems.map((item) => item.id === taskId ?
-      {...item, task: updatedTask, priority, isChecked: false} : item
-    ))
+      prevItems.map((item) =>
+        item.id === taskId
+          ? { ...item, task: updatedTask, priority, isChecked: false }
+          : item
+      )
+    );
     setTaskId();
-    setItem("")
-    setPriority("low")
-    setEditing(false)
-  }
+    setItem('');
+    setPriority('low');
+    setEditing(false);
+  };
 
   const handleClear = () => {
     setToDoItems([]);
   };
 
-
   return (
-    <div className="container">
-      <div>
-        <DeletedItemLIst toDoItem={toDoItems}/>
+    <div className="app">
+      <Navbar todoItems={toDoItems} setTodoItems={setToDoItems} />
+      <div className="app-container">
         <ToDoItems toDoItems={toDoItems} onClear={handleClear}>
-          <Form 
-            onSubmit={handleSubmit} 
-            setItem={setItem} 
-            item={item} 
-            priority={priority} 
+          <Form
+            onSubmit={handleSubmit}
+            setItem={setItem}
+            item={item}
+            priority={priority}
             setPriority={setPriority}
             editing={editing}
           />
@@ -86,37 +93,44 @@ function App() {
             toDoItems={toDoItems}
             setTaskId={setTaskId}
             setEditing={setEditing}
-            />
+            editing={editing}
+          />
         </ToDoItems>
-        <DoneList toDoItems={toDoItems} />
       </div>
+
+      <TaskInfo toDoItems={toDoItems} />
+
+      <ToastContainer position="top-right" theme="dark" />
     </div>
   );
 }
 
 export default App;
 
-const DoneList = ({ toDoItems }) => {
+const TaskInfo = ({ toDoItems }) => {
   const numItem = toDoItems.length;
   const numCheckedItem = toDoItems.filter((item) => item.isChecked).length;
 
-  if (!numItem) return <p>Your todo list is empty</p>;
+  if (!numItem) return <p className="footer-info">Your todo list is empty</p>;
   if (numCheckedItem === numItem && numItem) {
-    return <p>All tasks Completed. Nice Job</p>;
+    return <p className="footer-info">All tasks Completed. Nice Job</p>;
   }
 
   return (
-    <div>
-      <p>You have {numItem} tasks in you to-do list.</p>
-      {!numCheckedItem ? (
-        <p>No task completed yet</p>
-      ) : (
-        <p>
-          {numCheckedItem} tasks completed, {numItem - numCheckedItem} yet to be
-          completed
+    <div className="footer">
+      <div className="footer-info">
+        <p style={{ marginRight: '10px' }}>
+          You have {numItem} tasks in you to-do list.
         </p>
-      )}
-     
+        {!numCheckedItem ? (
+          <p>No task completed yet</p>
+        ) : (
+          <p>
+            {numCheckedItem} tasks completed, {numItem - numCheckedItem} yet to
+            be completed
+          </p>
+        )}
+      </div>
     </div>
   );
 };

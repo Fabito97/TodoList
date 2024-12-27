@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { FaTrashAlt } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 
-const TodoList = ({setToDoItems, toDoItems, setItem, setPriority, setTaskId, setEditing}) => {
+const TodoList = ({setToDoItems, toDoItems, setItem, setPriority, setTaskId, setEditing, editing}) => {
   const [deletedItems, setDeletedItems] = useState(() => {
     const savedItems = localStorage.getItem('deletedItems');
     return savedItems ? JSON.parse(savedItems) : [];
@@ -15,7 +17,7 @@ const TodoList = ({setToDoItems, toDoItems, setItem, setPriority, setTaskId, set
     setToDoItems((items) => 
       items.map((item) => item.id === id ? 
         { ...item, isChecked: !item.isChecked } : item
-    )
+    ).sort((a, b) => a.isChecked - b.isChecked)
     );
   };
 
@@ -53,18 +55,19 @@ const TodoList = ({setToDoItems, toDoItems, setItem, setPriority, setTaskId, set
         onDelete={handleDelete}
         onChecked={handleChecked}
         handleEdit={handleEdit}
+        editing={editing}
       />
       )}
     </ul>
   );
 };
 
-const ToDoItem = ({ item, id, onDelete, onChecked, isChecked, priority, handleEdit }) => {
+const ToDoItem = ({ item, id, onDelete, onChecked, isChecked, priority, handleEdit, editing }) => {
   // const [checked, setChecked] = useState(false)
   const statusText = isChecked ? "Done" : priority
 
   return (
-    <li onClick={() => onChecked(id)} className="">
+    <li onClick={() => onChecked(id)} className={`${editing ? "editing" : ""}`}>
       <div 
         style={{
           maxWidth:'80%'
@@ -81,23 +84,22 @@ const ToDoItem = ({ item, id, onDelete, onChecked, isChecked, priority, handleEd
         </span> 
       </div>
       
-      <div>
-        <button
+      <div style={{display:'flex'}}> 
+        <button className="btn-edit"
           style={{
-            padding:'5px',
-            borderRadius:'8px',
-            background:"#403",
+            padding:'3px 7px',
+            background:"none",
             border:"none",
             color:"#ccc",
-            fontSize: "10px",          
+            fontSize: "10px",
           }}
           onClick={(e) => handleEdit(e, id)}
-          >Edit</button>
+          ><FaEdit size={15}/></button>
 
         <button className='btn-delete remove-item'
           onClick={() => onDelete(id)}
           >
-          &times;
+          <FaTrashAlt />
         </button>
       </div>
     </li>
