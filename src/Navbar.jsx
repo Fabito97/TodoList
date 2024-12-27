@@ -100,7 +100,7 @@ const Navbar = ({ todoItems, setTodoItems }) => {
           <h2>To Do List</h2>
         </div>
         <div style={{ position: 'relative' }}>
-          <button
+          <button className='btn-filter'
             style={{
               padding: '10px 20px',
               borderRadius: '10px',
@@ -125,6 +125,7 @@ const Navbar = ({ todoItems, setTodoItems }) => {
                 boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
                 left: '-30px',
                 cursor: 'pointer',
+                zIndex: 1,
               }}
               onMouseOver={() => setFilter(true)}
               onMouseOut={() => setFilter(false)}
