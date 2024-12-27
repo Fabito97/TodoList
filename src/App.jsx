@@ -4,24 +4,36 @@ import Form from './Form';
 import { ToDoItems } from './ToDoItems';
 import TodoList from './TodoList';
 import Navbar from './Navbar';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 function App() {
+  const priorityOrder = {High: 1, Mid: 2, Low: 3};
+
+  const sortTasks = (tasks) => {
+    if (tasks.length) {
+      return [...tasks]
+                .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority])
+                .slice().sort((a, b) => a.isChecked - b.isChecked);
+    }
+    return tasks;
+  }
+
   const [toDoItems, setToDoItems] = useState(() => {
     const savedItems = localStorage.getItem('toDoItems');
     const tasks = savedItems ? JSON.parse(savedItems) : [];
 
-    return tasks.sort((a, b) => a.isChecked - b.isChecked);
+    return sortTasks(tasks);     
   });
 
   const [taskId, setTaskId] = useState();
-  const [priority, setPriority] = useState('low');
+  const [priority, setPriority] = useState('Low');
   const [item, setItem] = useState('');
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
   }, [toDoItems]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,9 +52,8 @@ function App() {
             priority,
           };
 
-          setToDoItems((items) =>
-            [...items, newItem].sort((a, b) => a.isChecked - b.isChecked)
-          );
+          setToDoItems((items) => sortTasks([...items, newItem]));
+          toast.success('Task added successfully');
         }
       } else {
         alert(`${item} is already in your list`);
@@ -60,6 +71,7 @@ function App() {
           : item
       )
     );
+    toast.success('Task updated successfully');
     setTaskId();
     setItem('');
     setPriority('low');
@@ -100,7 +112,7 @@ function App() {
 
       <TaskInfo toDoItems={toDoItems} />
 
-      <ToastContainer position="top-right" theme="dark" />
+      <ToastContainer position="top-right" />
     </div>
   );
 }
@@ -126,8 +138,7 @@ const TaskInfo = ({ toDoItems }) => {
           <p>No task completed yet</p>
         ) : (
           <p>
-            {numCheckedItem} tasks completed, {numItem - numCheckedItem} yet to
-            be completed
+            {numCheckedItem} task(s) completed.
           </p>
         )}
       </div>

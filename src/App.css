@@ -30,6 +30,7 @@ body {
 
 .navbar {
   padding: 1rem 2rem;  
+  margin-bottom: 3rem;
   color: #fff;
 }
 
@@ -54,7 +55,6 @@ body {
   display: flex;
   align-items: center;  
   justify-content: flex-start;
-  gap: 1rem;
   width: auto;
 }
 
@@ -170,11 +170,27 @@ li .status {
   margin-left: 1rem;
   color: #fff;
   font-size: 10px;
-  background-color: green;
   padding: 2px 4px;
   border-radius: 5px;
+}
+
+
+li .status.high {
+  background: red;
+  
+}
+li .status.mid {
+  background: orange;
+}
+li .status.low {
+  background: rgba(104, 104, 196, 0.867);
+}
+
+li .status.completed {
+  background: green;
   opacity: 0.5;
 }
+
 
 .btn-delete {
   background-color: transparent;
@@ -183,28 +199,11 @@ li .status {
   padding: 7px;
 }
 
-
-
 .btn-edit:hover,
 .btn-delete:hover {
   transform: scale(1.1);
   cursor: pointer;
 
-}
-
-li .status.high {
-  background: red;
-  
-}
-li .status.medium {
-  background: orange;
-}
-li .status.low {
-  background: green;
-}
-
-li .status.completed {
-  background: green;
 }
 
 .editing {
@@ -244,3 +243,18 @@ li .status.completed {
   color: #fff;
   
 } 
+
+.nav .priority{
+  padding: 5px;
+  padding-right: 15px;
+  /* border: 1px solid #ddd; */
+  border-radius: 10px;
+  margin-top: 5px;
+  background: #170533;
+  color: #Efff;
+  display: block;
+}
+
+.nav .priority:hover {
+  display: block;
+}

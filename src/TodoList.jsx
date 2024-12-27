@@ -79,8 +79,8 @@ const ToDoItem = ({ item, id, onDelete, onChecked, isChecked, priority, handleEd
         
        
       </span>
-        <span className={`status ${isChecked ? "status.completed" : priority.toLowerCase()}`}>
-          {`${isChecked ? "Done": priority}` }
+        <span className={`status ${isChecked ? "completed" : priority.toLowerCase()}`}>
+          {`${isChecked ? "Completed": priority}` }
         </span> 
       </div>
       

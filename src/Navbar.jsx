@@ -24,31 +24,28 @@ const Navbar = ({ todoItems, setTodoItems }) => {
 
   const handleDeletedTaskDisplayMenu = () => {
     fetchDeletedItem();
-    if (deletedTasks.length) { 
-        setIsOpen(true);
-        setFilter(false);
-    }
-    else toast.success('You have no deleted tasks');
+    if (deletedTasks.length) {
+      setIsOpen(true);
+      setFilter(false);
+    } else toast.success('You have no deleted tasks');
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        filter &&
+        !event.target.closest('.navbar ul') &&
+        !event.target.closest('button')
+      ) {
+        setFilter(false);
+      }
+    };
 
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (
-  //       filter &&
-  //       !event.target.closest('.navbar ul') &&
-  //       !event.target.closest('button')
-  //     ) {
-  //       setFilter(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, [filter]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [filter]);
 
   const handleClear = () => {
     localStorage.removeItem('deletedItems');
@@ -67,7 +64,32 @@ const Navbar = ({ todoItems, setTodoItems }) => {
   };
 
   const handleCompletedTaskFilter = () => {
-    // setTodoItems((prevTasks) => prevTasks.filter((task) => task.isChecked));
+    setTodoItems((prevTasks) =>
+      prevTasks.slice().sort((a, b) => !a.isChecked - !b.isChecked)
+    );
+  };
+
+  const handleUncompletedTaskFilter = () => {
+    setTodoItems((prevTasks) =>
+      prevTasks.slice().sort((a, b) => a.isChecked - b.isChecked)
+    );
+  };
+
+  const handlePriorityFilter = (priority) => {
+    const priorityOrder = { High: 2, Mid: 3, Low: 4};
+
+    if (priority === 'High')  {
+      priorityOrder.High = 1;
+    } else if (priority === 'Mid') {
+      priorityOrder.Mid = 1;
+    } else {
+      priorityOrder.Low = 1;
+    }
+    
+    setTodoItems((prevTasks) =>
+      prevTasks.slice().sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority])
+                    .sort((a, b) => a.isChecked - b.isChecked)
+    );
   }
 
   return (
@@ -77,7 +99,7 @@ const Navbar = ({ todoItems, setTodoItems }) => {
           <img src={Logo} width={70} alt="" />
           <h2>To Do List</h2>
         </div>
-        <div>
+        <div style={{ position: 'relative' }}>
           <button
             style={{
               padding: '10px 20px',
@@ -96,20 +118,30 @@ const Navbar = ({ todoItems, setTodoItems }) => {
               style={{
                 position: 'absolute',
                 background: '#2b0e5a',
+                width: '130px',
                 padding: '10px',
+                paddingRight: '20px',
                 borderRadius: '10px',
                 boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
-                zIndex: '100',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignContent: 'center',
+                left: '-30px',
                 cursor: 'pointer',
               }}
+              onMouseOver={() => setFilter(true)}
+              onMouseOut={() => setFilter(false)}
             >
-              <li>All tasks</li>
+              <li onClick={handleUncompletedTaskFilter}>All tasks</li>
               <li onClick={handleCompletedTaskFilter}>Completed tasks</li>
-              <li onClick={handleDeletedTaskDisplayMenu}>Deleted tasks</li>
+              <li>
+                Priority
+                <ul
+                  className="priority"
+                 
+                >
+                  <li onClick={() => handlePriorityFilter("High")}>High</li>
+                  <li onClick={() => handlePriorityFilter("Mid")}>Mid</li>
+                  <li onClick={() => handlePriorityFilter("Low")}>Low</li>
+                </ul>
+              </li>
             </ul>
           )}
           {isOpen && (

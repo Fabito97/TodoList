@@ -16,14 +16,14 @@ const Form = ({ onSubmit, setItem, item, priority, setPriority, editing }) => {
             fontSize: '10px',
           }}
         >
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
+          <option value="Low">Low</option>
+          <option value="Mid">MId</option>
+          <option value="High">High</option>
         </select>
 
       </div>
       <input
-        placeholder="item..."
+        placeholder="Task..."
         value={item}
         onChange={(e) => setItem(e.target.value)}
       />
