@@ -42,7 +42,8 @@ body {
 }
 
 .app-wrapper {
-  max-width:500px;
+  max-width: 500px;
+  max-height: 90vh;
   color: #fff;
   background: linear-gradient(135deg, #090e16, #100818);
   margin:  auto;
@@ -108,7 +109,7 @@ body {
 .item-list {
   list-style: none;
   margin: 2rem 0;
-  max-height: 300px;
+  max-height: 60vh;
   overflow: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -241,7 +242,7 @@ li .status.completed {
   justify-content: center;
   align-items: center;
   color: #fff;
-  
+  margin: 4rem 0;
 } 
 
 .nav .priority{
