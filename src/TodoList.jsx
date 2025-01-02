@@ -73,7 +73,7 @@ const ToDoItem = ({ item, id, onDelete, onChecked, isChecked, priority, handleEd
           maxWidth:'80%'
         }}
       >
-
+      <span className="checkbox"></span>
       <span className={`item ${isChecked ? "checked" : ""}`}>
         {item}
         

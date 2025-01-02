@@ -6,12 +6,16 @@ export const ToDoItems = ({ children, toDoItems, onClear }) => {
     <div className="app-wrapper">
       <div style={{}}>
         <div className="title">
-          <p>Start by adding items to your todo list</p>
+          <p>{`${
+            toDoItems.length
+              ? 'Keep adding tasks to stay on top of your goals.'
+              : 'Start by adding tasks to your todo list'
+          } `}</p>
         </div>
 
         {children}
 
-        <div className="title">
+        <div className="">
           <ClearButton toDoItems={toDoItems} onClear={onClear} />
         </div>
       </div>

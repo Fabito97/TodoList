@@ -114,7 +114,7 @@ const Navbar = ({ todoItems, setTodoItems }) => {
             Filter tasks
           </button>
           {filter && (
-            <ul
+            <ul className='filter-menu'
               style={{
                 position: 'absolute',
                 background: '#2b0e5a',

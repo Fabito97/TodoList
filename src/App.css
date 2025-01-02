@@ -8,8 +8,7 @@ body {
   color: #fff;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
- 
+  font-weight: 400; 
  }
  
 .container {
@@ -94,17 +93,6 @@ body {
   opacity: 1;
 } 
 
-.filter {
-  margin: 1rem 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.filter input {
-  padding: 10px;
-  border: none;
-  font-size: 1rem;
-  outline: none;
-}
 
 .item-list {
   list-style: none;
@@ -215,8 +203,11 @@ li .status.completed {
 .btn-clear {
   padding: 10px;
   border-radius: 10px;
+
+  display: block;
   border: 1px solid rgb(240, 164, 164);
-  width: 100%;
+  /* width: 100%; */
+  margin: 1rem auto;
   cursor: pointer;
   background: none;
   color: #fff;
@@ -263,32 +254,41 @@ li .status.completed {
 @media screen and (max-width: 500px) {
   .navbar {
     padding: 1rem;
+    margin-bottom: 0rem;
+  }
+
+  .filter-menu {
+    left: -50px !important;
   }
 
   .app-wrapper {
-    margin: 1.5rem;
+    margin: 1rem;
+    padding: 1rem;
+    padding-bottom: 2rem;
   }
 
+  .title {
+    margin-bottom: 1.5rem;
+  }
+
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item-list li,
+  .form input,
+  .btn-filter,
   .app-title {
     font-size: small;
   }
-  .btn-filter {
-    font-size: small;
-  }
-
-  .form input {
-    font-size: small;
-  }
-
-  .item-list li {
-    font-size: small;
-  }
-
+  
   .footer-info {
     font-size: small;
     padding: 1rem;
     display: block  ;
     text-align: center ;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
   }
 }
