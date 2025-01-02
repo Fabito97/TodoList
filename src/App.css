@@ -123,6 +123,7 @@ body {
 
 .item-list li .item {
   position: relative;
+  display: flex;
   padding: 0 0 0 2rem;
   font-size: 14px;
   color: #ddd;
@@ -130,7 +131,7 @@ body {
   text-align: left;
 }
 
-.item-list li .item::before {
+.item-list li .item .checkbox {
   content: '';
   position: absolute;
   height: 12px;
@@ -139,6 +140,7 @@ body {
   background: url('./assets/unchecked.png') no-repeat center center/cover;
   top: 5px;
   left: 0;
+  margin-right: 0.5rem;
 }
 
 .item-list li .item.checked {
@@ -146,7 +148,7 @@ body {
   text-decoration: line-through;
 }
 
-.item-list li .item.checked::before {
+.item-list li .item.checked .checkbox {
   content: '';
   position: absolute;
   height: 15px;
@@ -165,12 +167,13 @@ li .status {
 
 
 li .status.high {
-  background: red;
-  
+  background: red;  
 }
+
 li .status.mid {
   background: orange;
 }
+
 li .status.low {
   background: rgba(104, 104, 196, 0.867);
 }
@@ -207,7 +210,7 @@ li .status.completed {
   display: block;
   border: 1px solid rgb(240, 164, 164);
   /* width: 100%; */
-  margin: 1rem auto;
+  margin: 1rem auto 0;
   cursor: pointer;
   background: none;
   color: #fff;
@@ -275,6 +278,14 @@ li .status.completed {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  
+  .item-list li .item {
+    padding-left: 1.5rem;
+  }
+
+  li .status {
+    margin-left: .75rem;  
   }
 
   .item-list li,

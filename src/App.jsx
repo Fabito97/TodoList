@@ -106,6 +106,7 @@ function App() {
             setTaskId={setTaskId}
             setEditing={setEditing}
             editing={editing}
+            sortTasks={sortTasks}
           />
         </ToDoItems>
       </div>
