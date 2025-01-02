@@ -96,7 +96,7 @@ const ToDoItem = ({
         <div className={`item ${isChecked ? 'checked' : ''}`}>
           <span className="checkbox"></span>
           <div>
-            <span>{item}</span>
+            <span style={{marginRight: "1rem"}}>{item}</span>
             <span
               className={`status ${
                 isChecked ? 'completed' : priority.toLowerCase()
