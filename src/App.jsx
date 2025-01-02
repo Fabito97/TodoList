@@ -109,9 +109,9 @@ function App() {
             sortTasks={sortTasks}
           />
         </ToDoItems>
+      <TaskInfo toDoItems={toDoItems} />
       </div>
 
-      <TaskInfo toDoItems={toDoItems} />
 
       <ToastContainer position="top-right" />
     </div>
